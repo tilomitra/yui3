@@ -410,7 +410,8 @@ define(GESTURE_MOVE_START, {
         //or if it's an MSPointer event, fire gesturemovestart
         if ((e.touches) ||
             (e.type.indexOf('mouse') !== -1 && !subscriber.preventMouse) ||
-            e.type.indexOf('MSPointer') !== -1) {
+            e.type.indexOf('MSPointer') !== -1 ||
+            e._event.type.indexOf('mouse') !== -1) {
             e.type = GESTURE_MOVE_START;
             Y.log("gesturemovestart: Firing start: " + new Date().getTime(), "event-gestures");
             node.setData(_MOVE_START, e);
@@ -674,7 +675,8 @@ define(GESTURE_MOVE_END, {
             node = e[CURRENT_TARGET];
         }
 
-        var fireMoveEnd = subscriber._extra.standAlone || node.getData(_MOVE) || node.getData(_MOVE_START),
+        var startData = node.getData(_MOVE_START),
+            fireMoveEnd = subscriber._extra.standAlone || node.getData(_MOVE) || startData,
             preventDefault = subscriber._extra.preventDefault,
             preventMouse = subscriber.preventMouse || false;
 
@@ -696,12 +698,13 @@ define(GESTURE_MOVE_END, {
                 _prevent(e, preventDefault);
 
                 if (e.changedTouches) {
-                    this._end(e, node, subscriber, ce);
+                    this._end(e, node, subscriber, ce, startData);
                 }
                 //Only call _end() if preventMouse is `false`
                 //ie: not when touch events have not already called _end()
-                else if (e.type.indexOf('mouse') !== -1 && !preventMouse) {
-                    this._end(e, node, subscriber, ce);
+                else if (e.type.indexOf('mouse') !== -1 && !preventMouse ||
+                    e._event.type.indexOf('mouse') !== -1) {
+                    this._end(e, node, subscriber, ce, startData);
                 }
 
                 //If a mouse event comes in after a touch event, it will go in here and
@@ -713,16 +716,24 @@ define(GESTURE_MOVE_END, {
                 }
 
                 else if (e.type.indexOf('MSPointer') !== -1) {
-                    this._end(e, node, subscriber, ce);
+                    this._end(e, node, subscriber, ce, startData);
                 }
             }
         }
     },
 
-    _end: function (e, node, subscriber, ce) {
+    _end: function (e, node, subscriber, ce, startData) {
         e.type = GESTURE_MOVE_END;
-        ce.fire(e);
 
+        if (startData) {
+            e.gesture = {
+                deltaX: e.pageX - startData.pageX,
+                deltaY: e.pageY - startData.pageY,
+                dirX: ((e.pageX - startData.pageX) < 0) ? 'left' : 'right',
+                dirY: ((e.pageY - startData.pageY) < 0) ? 'up' : 'down'
+            };
+        }
+        ce.fire(e);
         node.clearData(_MOVE_START);
         node.clearData(_MOVE);
     },
