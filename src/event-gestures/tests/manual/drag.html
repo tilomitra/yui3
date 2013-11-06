@@ -84,7 +84,7 @@
         YUI({
             filter: 'raw',
             combine: false
-        }).use('event-drag', function (Y) {
+        }).use('event-drag', 'node', function (Y) {
             console.log('loaded');
             var box1 = Y.one('#box1');
             var log = Y.one('#log');
@@ -93,7 +93,7 @@
                 clickTimeThresh: 0,
                 clickPixelThresh: 0
             };
-            box1.on(['gesturemovestart', 'gesturedrag', 'dragright', 'gesturemoveend'], function (e) {
+            box1.on(['gesturemovestart', 'moveleft', 'moveright', 'gesturemoveend'], function (e) {
                 log.appendChild('<li>' + e.type + '</li>');
             }, {
                 dragMinDistance: 15
