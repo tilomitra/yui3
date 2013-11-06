@@ -206,7 +206,7 @@ var eventDef = {
 
     _fireDrag: function (e, ce, xDiff, yDiff, startXY, currentXY) {
         e.type = this._eventType;
-        e.drag = {
+        e.gesture = {
             direction: this._determineDirection(xDiff, yDiff, startXY, currentXY),
             deltaX: currentXY[0] - startXY[0],
             deltaY: currentXY[1] - startXY[1]
@@ -250,7 +250,7 @@ Y.Event.define('moveright', Y.merge(eventDef, {
 Y.Event.define('moveup', Y.merge(eventDef, {
     _eventType: 'moveup',
     _isValidDirection: function (xDiff, yDiff, startXY, currentXY) {
-        if (this._determineDirection(xDiff, yDiff, startXY, currentXY) === 'moveup') {
+        if (this._determineDirection(xDiff, yDiff, startXY, currentXY) === 'up') {
             return true;
         }
         else {
