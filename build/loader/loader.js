@@ -11,7 +11,7 @@ YUI.add('loader-base', function (Y, NAME) {
         BUILD = '/build/',
         ROOT = VERSION + '/',
         CDN_BASE = Y.Env.base,
-        GALLERY_VERSION = 'gallery-2013.10.14-18-07',
+        GALLERY_VERSION = 'gallery-2013.10.30-22-13',
         TNT = '2in3',
         TNT_VERSION = '4',
         YUI2_VERSION = '2.9.0',
@@ -4341,6 +4341,11 @@ Y.mix(YUI.Env[Y.version].modules, {
             "node-base"
         ]
     },
+    "event-drag": {
+        "requires": [
+            "event-move"
+        ]
+    },
     "event-flick": {
         "requires": [
             "node-base",
@@ -4356,7 +4361,8 @@ Y.mix(YUI.Env[Y.version].modules, {
     "event-gestures": {
         "use": [
             "event-flick",
-            "event-move"
+            "event-move",
+            "event-drag"
         ]
     },
     "event-hover": {
@@ -5862,7 +5868,7 @@ Y.mix(YUI.Env[Y.version].modules, {
         ]
     }
 });
-YUI.Env[Y.version].md5 = '7becfe88413f127e331d461de8ec774c';
+YUI.Env[Y.version].md5 = 'c7e62f55d5014f312016c506044e7ad5';
 
 
 }, '@VERSION@', {"requires": ["loader-base"]});

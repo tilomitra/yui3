@@ -1873,6 +1873,16 @@ suite.add(new YUITest.TestCase({
             //Testing A normal module
             Assert.isTrue((loader.sorted.indexOf("event-delegate")) > -1, "Module (event-delegate) not found in sorted array");
         },
+     "Testing event-drag": function(data) {
+            var loader = new Y.Loader({
+                require: ["event-drag"],
+                ignoreRegistered: true,
+                allowRollup: false
+            });
+            loader.calculate();
+            //Testing A normal module
+            Assert.isTrue((loader.sorted.indexOf("event-drag")) > -1, "Module (event-drag) not found in sorted array");
+        },
      "Testing event-flick": function(data) {
             var loader = new Y.Loader({
                 require: ["event-flick"],
@@ -1903,6 +1913,7 @@ suite.add(new YUITest.TestCase({
             //Testing A rollup module
             Assert.isTrue((loader.sorted.indexOf("event-flick")) > -1, "Module (event-flick) not found in sorted array");
             Assert.isTrue((loader.sorted.indexOf("event-move")) > -1, "Module (event-move) not found in sorted array");
+            Assert.isTrue((loader.sorted.indexOf("event-drag")) > -1, "Module (event-drag) not found in sorted array");
         },
      "Testing event-hover": function(data) {
             var loader = new Y.Loader({

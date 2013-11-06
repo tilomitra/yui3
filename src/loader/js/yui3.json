@@ -1389,6 +1389,11 @@
             "node-base"
         ]
     },
+    "event-drag": {
+        "requires": [
+            "event-move"
+        ]
+    },
     "event-flick": {
         "requires": [
             "node-base",
@@ -1404,7 +1409,8 @@
     "event-gestures": {
         "use": [
             "event-flick",
-            "event-move"
+            "event-move",
+            "event-drag"
         ]
     },
     "event-hover": {
