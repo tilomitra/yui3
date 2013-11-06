@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+
+    <style>
+        .box {
+            width: 150px;
+            height: 150px;
+            background: blue;
+            color: white;
+        }
+        #log {
+            position: fixed;
+            top: 0;
+            right: 30px;
+            background: black;
+            color: white;
+            padding: 10px;
+            font-size: 10px;
+            height: 500px;
+            width: 100px;
+            overflow: scroll;
+            -webkit-overflow-scroll: touch;
+        }
+    </style>
+</head>
+<body>
+    <button class="pure-button pure-button-primary" id="clearBtn">Clear log contents</button>
+    <div class="box" id="box1">
+        <p>
+            Drag me!
+        </p>
+    </div>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+
+
+    <ul id="log"></ul>
+
+    <script src="../../../../build/yui/yui-debug.js"></script>
+    <script>
+        YUI({
+            filter: 'raw',
+            combine: false
+        }).use('event-drag', function (Y) {
+            console.log('loaded');
+            var box1 = Y.one('#box1');
+            var log = Y.one('#log');
+            var btn = Y.one('#clearBtn');
+            var opts = {
+                clickTimeThresh: 0,
+                clickPixelThresh: 0
+            };
+            box1.on(['gesturemovestart', 'gesturedrag', 'dragright', 'gesturemoveend'], function (e) {
+                log.appendChild('<li>' + e.type + '</li>');
+            }, {
+                dragMinDistance: 15
+            });
+
+
+
+            // box1.on([
+
+            //     'drag:start',
+            //     'drag:drag',
+            //     'drag:end'
+            // ],
+            // function (e) {
+            //     log.appendChild('<li>' + e.type + '</li>');
+            // }, {
+            //     clickPixelThresh: 100
+            // });
+
+
+            btn.on('click', function (e) {
+                log.empty();
+            });
+            // box1.on('drag:mouseup', function (e) {
+            //     log.appendChild('<li>mouseup</li>');
+            // });
+            // box1.on('drag:mouseDown', function (e) {
+            //     console.log('drag:mousedown');
+            // });
+            // box1.on('drag:drag', function (e) {
+            //     console.log('drag');
+            // });
+        });
+
+    </script>
+</body>
+</html>

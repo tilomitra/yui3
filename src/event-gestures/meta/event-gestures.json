@@ -1,6 +1,6 @@
 {
     "event-gestures": {
-        "use": ["event-flick", "event-move"],
+        "use": ["event-flick", "event-move", "event-drag"],
         "submodules": {
             "event-flick": {
                 "requires": [
@@ -15,6 +15,11 @@
                     "node-base",
                     "event-touch",
                     "event-synthetic"
+                ]
+            },
+            "event-drag": {
+                "requires": [
+                    "event-move"
                 ]
             }
         }
