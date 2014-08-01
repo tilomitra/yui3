@@ -1904,6 +1904,16 @@ suite.add(new YUITest.TestCase({
             Assert.isTrue((loader.sorted.indexOf("event-flick")) > -1, "Module (event-flick) not found in sorted array");
             Assert.isTrue((loader.sorted.indexOf("event-move")) > -1, "Module (event-move) not found in sorted array");
         },
+     "Testing event-hammer": function(data) {
+            var loader = new Y.Loader({
+                require: ["event-hammer"],
+                ignoreRegistered: true,
+                allowRollup: false
+            });
+            loader.calculate();
+            //Testing A normal module
+            Assert.isTrue((loader.sorted.indexOf("event-hammer")) > -1, "Module (event-hammer) not found in sorted array");
+        },
      "Testing event-hover": function(data) {
             var loader = new Y.Loader({
                 require: ["event-hover"],
@@ -1943,16 +1953,6 @@ suite.add(new YUITest.TestCase({
             loader.calculate();
             //Testing A normal module
             Assert.isTrue((loader.sorted.indexOf("event-mousewheel")) > -1, "Module (event-mousewheel) not found in sorted array");
-        },
-     "Testing event-move": function(data) {
-            var loader = new Y.Loader({
-                require: ["event-move"],
-                ignoreRegistered: true,
-                allowRollup: false
-            });
-            loader.calculate();
-            //Testing A normal module
-            Assert.isTrue((loader.sorted.indexOf("event-move")) > -1, "Module (event-move) not found in sorted array");
         },
      "Testing event-outside": function(data) {
             var loader = new Y.Loader({

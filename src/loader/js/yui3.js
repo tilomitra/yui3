@@ -1468,6 +1468,13 @@ Y.mix(YUI.Env[Y.version].modules, {
             "event-move"
         ]
     },
+    "event-hammer": {
+        "requires": [
+            "node-base",
+            "event-touch",
+            "event-synthetic"
+        ]
+    },
     "event-hover": {
         "requires": [
             "event-mouseenter"
@@ -1486,13 +1493,6 @@ Y.mix(YUI.Env[Y.version].modules, {
     "event-mousewheel": {
         "requires": [
             "node-base"
-        ]
-    },
-    "event-move": {
-        "requires": [
-            "node-base",
-            "event-touch",
-            "event-synthetic"
         ]
     },
     "event-outside": {
@@ -2970,4 +2970,4 @@ Y.mix(YUI.Env[Y.version].modules, {
         ]
     }
 });
-YUI.Env[Y.version].md5 = '8e471689779fc84718f6dad481790b59';
+YUI.Env[Y.version].md5 = '913db84843fb40d34b8f6c619d324294';

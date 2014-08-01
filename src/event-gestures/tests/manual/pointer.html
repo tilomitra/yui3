@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=false;">
+    <title>event-pointer manual test</title>
+    <style>
+        #event-pointer-module {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>event-pointer manual test</h1>
+    <div id="event-pointer-module">
+        A basic DOM element.
+    </div>
+
+    <ul id="log">
+
+    </ul>
+
+    <script src="../../../../build/yui/yui.js"></script>
+    <script>
+
+        YUI({
+            filter: 'raw'
+        }).use('event-move', 'node-style', function (Y) {
+
+            var node1 = Y.one('#event-pointer-module'),
+                log = Y.one('#log');
+
+            node1.on('gesturemovestart', function (e) {
+                e.preventDefault();
+                log.appendChild('<li>Red Node - Firing event of type:' + e.type + '</li>');
+                node1.setStyle('background', 'blue');
+            });
+
+            node1.on('gesturemoveend', function (e) {
+                log.appendChild('<li>Red Node - Firing event of type:' + e.type + '</li>');
+                node1.setStyle('background', 'red');
+            });
+
+        });
+
+    </script>
+</body>
+</html>

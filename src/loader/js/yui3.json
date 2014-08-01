@@ -1408,6 +1408,13 @@
             "event-move"
         ]
     },
+    "event-hammer": {
+        "requires": [
+            "node-base",
+            "event-touch",
+            "event-synthetic"
+        ]
+    },
     "event-hover": {
         "requires": [
             "event-mouseenter"
@@ -1426,13 +1433,6 @@
     "event-mousewheel": {
         "requires": [
             "node-base"
-        ]
-    },
-    "event-move": {
-        "requires": [
-            "node-base",
-            "event-touch",
-            "event-synthetic"
         ]
     },
     "event-outside": {

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body class="yui3-skin-sam">
+    <script src="../../../../build/yui/yui.js"></script>
+
+    <div id="panel1">
+    </div>
+    <div id="panel2">
+    </div>
+
+    <script type="text/javascript">
+    YUI().use('panel', function (Y) {
+
+            panel1 = new Y.Panel({
+                bodyContent: 'This panel opens first, sets the mask zindex correctly, but gets hidden by the second panel rednering',
+                width      : 400,
+                zIndex     : 6,
+                modal      : true,
+                visible    : true,
+                render     : '#panel1'
+            });
+            panel2 = new Y.Panel({
+                bodyContent: 'This panel, even though it is hidden, sets the mask index, covering panel1',
+                zIndex     : 7,
+                modal      : true,
+                visible    : false,
+                render     : '#panel2'
+            });
+
+    });
+
+    </script>
+</body>
+</html>

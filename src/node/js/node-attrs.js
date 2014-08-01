@@ -88,6 +88,23 @@ Y_Node.ATTRS = {
             Y_DOM.setValue(this._node, val);
             return val;
         }
+    },
+
+    gestureOpts: {
+        getter: function () {
+            // Create an empty gestureOpts if one does not exist.
+            var opts = this.getData('gestureOpts');
+            if (!opts) {
+                opts = {};
+                this.setData('gestureOpts', opts);
+            }
+            return opts;
+        },
+
+        setter: function (opts) {
+            var currentOpts = this.get('gestureOpts');
+            return Y.mix(currentOpts, opts, true);
+        }
     }
 };
 

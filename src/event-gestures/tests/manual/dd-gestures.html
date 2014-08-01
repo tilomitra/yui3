@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+
+        #demo {
+            width: 200px;
+        }
+        #demo ul li {
+            border: 1px solid black;
+            background-color: #8DD5E7;
+            cursor: move;
+            margin: 3px;
+            list-style-type: none;
+        }
+
+        #event-move-module-1, #event-move-module-2 {
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+
+        #event-move-module-1 {
+            background: red;
+        }
+
+        #event-move-module-2 {
+            background: green;
+        }
+    </style>
+</head>
+<body class="yui3-skin-sam">
+
+    <div id="demo">
+        <ul>
+            <li>Item #1</li>
+            <li>Item #2</li>
+            <li>Item #3</li>
+            <li>Item #4</li>
+            <li>Item #5</li>
+            <li>Item #6</li>
+            <li>Item #7</li>
+            <li>Item #8</li>
+            <li>Item #9</li>
+            <li>Item #10</li>
+        </ul>
+    </div>
+    <div id="event-move-module-1">Event Move Module with minTime and minDistance</div>
+    <div id="event-move-module-2">Event Move Module with no params</div>
+    <script src="../../../../build/yui/yui.js"></script>
+    <script>
+        YUI({
+            filter: 'raw'
+        }).use('dd-delegate', 'console', 'event-move', function(Y) {
+            new Y.Console({ logSource: Y.Global, logInclude: { 'event-move': true, 'dd': true } }).render();
+            var del = new Y.DD.Delegate({
+                container: '#demo',
+                nodes: 'li'
+            }),
+            module1 = Y.one("#event-move-module-1"),
+            module2 = Y.one("#event-move-module-2");
+
+            del.on('drag:mouseDown', function (e) {
+                console.log("drag:mouseDown");
+                console.log(e);
+            });
+
+            del.on('drag:end', function (e) {
+                console.log("drag:end");
+                console.log(e);
+            });
+
+            module1.on('gesturemovestart', function (e) {
+                Y.log('Gesturemovestart called on event move module 1');
+            }, {
+                minTime: 50,
+                minDistance: 50
+            });
+
+            module1.on('gesturemove', function (e) {
+                Y.log('Gesturemove called on event move module 1');
+            });
+
+            module1.on('gesturemoveend', function (e) {
+                Y.log('Gesturemoveend called on event move module 1');
+            });
+
+
+            module2.on('gesturemovestart', function (e) {
+                Y.log('Gesturemovestart called on event move module 2');
+            });
+
+            module2.on('gesturemove', function (e) {
+                Y.log('Gesturemove called on event move module 2');
+                // module2.setStyles({
+                //     'top': e.pageY + 'px',
+                //     'left': e.pageX + 'px',
+                //     'position': 'absolute'
+                // });
+            });
+
+            module2.on('gesturemoveend', function (e) {
+                Y.log('Gesturemoveend called on event move module 2');
+            });
+
+        });
+    </script>
+</body>
+</html>

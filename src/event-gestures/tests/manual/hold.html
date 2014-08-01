@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>event-hold manual test</title>
+    <style>
+        #event-hold-module {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            background: red;
+        }
+
+        #event-hold-module-2 {
+            height: 150px;
+            background: yellow;
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>event-hold manual test</h1>
+    <p>Hold your mouse/finger down on these elements.</p>
+    <div id="event-hold-module">
+        A basic DOM element.
+    </div>
+
+    <div id="event-hold-module-2">
+        A DOM element with the following CSS:
+        <pre><code>
+-webkit-user-select: none;
+-webkit-user-drag: none;
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        </code></pre>
+
+        and custom config (threshold = 10, duration = 800)
+    </div>
+    <ul id="log">
+
+    </ul>
+
+    <script src="../../../../build/yui/yui.js"></script>
+    <script>
+
+        YUI({
+            filter: 'raw'
+        }).use('event-hold', 'node-style', function (Y) {
+
+            var node1 = Y.one('#event-hold-module'),
+                node2 = Y.one('#event-hold-module-2'),
+                log = Y.one('#log');
+
+            node1.on('hold', function (e) {
+                log.appendChild('<li>Red Node - Firing event of type:' + e.type + '</li>');
+                node1.setStyle('background', 'blue');
+            });
+
+            node1.on('release', function (e) {
+                log.appendChild('<li>Red Node - Firing event of type:' + e.type + '</li>');
+                node1.setStyle('background', 'red');
+            });
+
+            node2.on('hold', function (e) {
+                log.appendChild('<li>Yellow Node - Firing event of type:' + e.type + '</li>');
+                node2.setStyle('background', 'blue');
+            }, {
+                threshold: 10,
+                duration: 800
+            });
+
+            node2.on('release', function (e) {
+                log.appendChild('<li>Yellow Node - Firing event of type:' + e.type + '</li>');
+                node2.setStyle('background', 'yellow');
+            });
+
+        });
+
+    </script>
+</body>
+</html>

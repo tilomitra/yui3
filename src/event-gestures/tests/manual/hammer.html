@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hammer.js + YUI</title>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <style>
+
+        body {
+            padding: 15px;
+        }
+
+        .container { position: relative; }
+
+        .hitarea {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.05);
+            text-align: center;
+            border: solid 3px rgba(33,33,33,1);
+        }
+
+
+        .log li {
+            display: inline-block;
+            width: 49%;
+            overflow: hidden;
+        }
+
+        @media screen and (min-width: 640px) {
+            .log li { width: 30%; }
+        }
+
+        .properties li { white-space: nowrap; }
+        .properties span { margin-left: 5px; }
+
+        .log li.active { background: lightgreen; }
+
+        .log li.property-gesture {
+            position: fixed;
+            right: 0;
+            top: 0;
+            background: lightgreen;
+            padding: 1px 4px;
+            width: auto;
+        }
+
+    </style>
+</head>
+<body class="yui3-skin-sam">
+
+<h1>YUI Gesture Events <small>Hammer.js + YUI = <3</small></h1>
+<p class="alert"><strong>Press shift on your desktop for multitouch.</strong></p>
+
+<p>
+    <label class="checkbox">
+        <input type="checkbox" id="prevent-default"> block browser behavior (preventDefault)
+    </label>
+</p>
+<p>
+    <button class="btn" type="button" id="removeActiveBtn">Clear All Interactions</button>
+</p>
+<p>
+    <button class="btn" type="button" id="detachBtn">Detach Event Listeners</button>
+</p>
+<div class="container">
+<div class="log well well-small">
+    <h4>Events</h4>
+    <ul class="unstyled events" id="events-list">
+        <li id="log-gesture-touch">touch</li>
+        <li id="log-gesture-release">release</li>
+        <li id="log-gesture-hold">hold</li>
+        <li id="log-gesture-tap">tap</li>
+        <li id="log-gesture-doubletap">doubletap</li>
+
+        <li id="log-gesture-dragstart">dragstart</li>
+        <li id="log-gesture-drag">drag</li>
+        <li id="log-gesture-dragend">dragend</li>
+        <li id="log-gesture-dragdown">dragdown</li>
+        <li id="log-gesture-dragleft">dragleft</li>
+        <li id="log-gesture-dragright">dragright</li>
+        <li id="log-gesture-dragup">dragup</li>
+
+        <li id="log-gesture-swipe">swipe</li>
+        <li id="log-gesture-swipeleft">swipeleft</li>
+        <li id="log-gesture-swiperight">swiperight</li>
+        <li id="log-gesture-swipeup">swipeup</li>
+        <li id="log-gesture-swipedown">swipedown</li>
+
+        <li id="log-gesture-transformstart">transformstart</li>
+        <li id="log-gesture-transform">transform</li>
+        <li id="log-gesture-transformend">transformend</li>
+        <li id="log-gesture-rotate">rotate</li>
+        <li id="log-gesture-pinch">pinch</li>
+        <li id="log-gesture-pinchin">pinchin</li>
+        <li id="log-gesture-pinchout">pinchout</li>
+    </ul>
+    <h4>EventData</h4>
+    <ul class="unstyled properties">
+        <li class="property-gesture"><strong>gesture</strong> <span id="log-prop-gesture"></span></li>
+        <li><strong>touches</strong> <span id="log-prop-touches"></span></li>
+        <li><strong>pointerType</strong> <span id="log-prop-pointerType"></span></li>
+        <li><strong>center</strong> <span id="log-prop-center"></span></li>
+        <li><strong>angle</strong> <span id="log-prop-angle"></span>&deg;</li>
+        <li><strong>direction</strong> <span id="log-prop-direction"></span></li>
+        <li><strong>distance</strong> <span id="log-prop-distance"></span>px</li>
+
+        <li><strong>deltaTime</strong> <span id="log-prop-deltaTime"></span>ms</li>
+        <li><strong>deltaX</strong> <span id="log-prop-deltaX"></span>px</li>
+        <li><strong>deltaY</strong> <span id="log-prop-deltaY"></span>px</li>
+
+        <li><strong>velocityX</strong> <span id="log-prop-velocityX"></span></li>
+        <li><strong>velocityY</strong> <span id="log-prop-velocityY"></span></li>
+
+        <li><strong>scale</strong>  <span id="log-prop-scale"></span></li>
+        <li><strong>rotation</strong> <span id="log-prop-rotation"></span>&deg;</li>
+
+        <li><strong>interimDirection</strong>  <span id="log-prop-interimDirection"></span></li>
+        <li><strong>interimAngle</strong> <span id="log-prop-interimAngle"></span>&deg;</li>
+
+        <li><strong>target</strong> <span id="log-prop-target"></span></li>
+    </ul>
+</div>
+
+<div id="hitarea" class="hitarea"></div>
+</div>
+
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+<script src="../../../../build/yui/yui.js"></script>
+<script src="../../../../../hammer.js/hammer.js"></script>
+
+<!-- <script src="../../../../bower_components/hammerjs/hammer.js"></script>
+ --><script src="../../../../bower_components/hammerjs/plugins/hammer.fakemultitouch.js"></script>
+<script src="../../../../bower_components/hammerjs/plugins/hammer.showtouches.js"></script>
+
+<!--[if !IE]> -->
+<script>
+    Hammer.plugins.showTouches();
+</script>
+<!-- <![endif]-->
+
+
+<script>
+    YUI({
+        filter: 'raw',
+        useBrowserConsole: true
+    }).use('node', 'event-hammer', 'console', 'node-event-delegate', function (Y) {
+
+        Hammer.plugins.fakeMultitouch();
+
+        function getEl(id) {
+            return document.getElementById(id);
+        }
+
+        var hitArea = Y.one('#hitarea');
+        var log_elements = {};
+        //var console = new Y.Console().render();
+
+
+        Y.one('#prevent-default').on('click', function() {
+            hitArea.set('gestureOpts', {prevent_default: this.checked});
+        });
+
+        function getLogElement(type, name) {
+            var el = log_elements[type + name];
+            if(!el) {
+                return log_elements[type + name] = getEl("log-"+ type +"-"+ name);
+            }
+            return el;
+        }
+
+        // log properties
+        var properties = ['gesture','center','deltaTime','angle','direction',
+            'distance','deltaX','deltaY','velocityX','velocityY', 'pointerType',
+            'interimDirection','interimAngle',
+            'scale','rotation','touches','target'];
+
+        function logEvent(ev) {
+            if(!ev.gesture) {
+                return;
+            }
+
+            // highlight gesture
+            var event_el = getLogElement('gesture', ev.type);
+            event_el.className = "active";
+
+
+            for(var i= 0,len=properties.length; i<len; i++) {
+                var prop = properties[i];
+                var value = ev.gesture[prop];
+                switch(prop) {
+                    case 'center':
+                        value = value.pageX +"x"+ value.pageY;
+                        break;
+                    case 'gesture':
+                        value = ev.type;
+                        break;
+                    case 'target':
+                        value = ev.gesture.target.nodeName || undefined;
+                        break;
+                    case 'touches':
+                        value = ev.gesture.touches.length;
+                        break;
+                }
+                getLogElement('prop', prop).innerHTML = value;
+
+            }
+
+            Y.log('firing ' + ev.type);
+        }
+
+
+        // get all the events
+        var all_events = [];
+        Y.all('#events-list li').each(function (node, index, list) {
+            var li = node;
+            var type = node.get('text');
+            li.setAttribute("id", "log-gesture-"+type);
+            all_events.push(type);
+        });
+
+        // hitArea.set('gestureOpts', {drag: false, swipe: false, release: false, touch: false});
+
+        //EVERYTHING
+        var handle1 = hitArea.on(all_events, function (e) {
+            logEvent(e);
+        });
+
+        //STANDARD USAGE
+
+        // var handle1 = hitArea.on('tap', function (e) {
+        //     logEvent(e);
+        // });
+
+
+        //EVENT DELEGATION
+        // var handle1 = Y.one('body').delegate('touch', function (e) {
+        //     logEvent(e);
+        // }, 'div');
+
+
+        //USING .after()
+        //subscribe to after() before subscribing to on()
+        // var handle1 = hitArea.after('click', function (e) {
+        //     console.log('after: ' + e.type);
+        // });
+
+        // var handle2 = hitArea.on('click', function (e) {
+        //     console.log('on: ' + e.type);
+        // });
+
+
+
+        //SETTING GESTURE OPTIONS
+
+        // hitArea.set('gestureOpts', {hold: false});
+
+        // var handle1 = hitArea.on('hold', function (e) {
+        //     console.log('handle1: ' + e.type);
+        //     logEvent(e);
+        // });
+
+        //If you comment out the line below, the `hold` callback will not get called.
+
+        // hitArea.set('gestureOpts', {hold: true});
+
+        // var handle2 = hitArea.on('tap', function (e) {
+        //     console.log('handle2: ' + e.type);
+        // });
+
+
+        Y.one('#removeActiveBtn').on('tap', function (e) {
+            Y.all('.active').removeClass('active');
+            //console.clearConsole();
+        });
+
+        Y.one('#detachBtn').on('tap', function (e) {
+            handle1.detach();
+        });
+
+
+
+    });
+</script>
+</body>
+</html>

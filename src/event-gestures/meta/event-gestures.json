@@ -9,8 +9,7 @@
                     "event-synthetic"
                 ]
             },
-
-            "event-move": {
+            "event-hammer": {
                 "requires": [
                     "node-base",
                     "event-touch",

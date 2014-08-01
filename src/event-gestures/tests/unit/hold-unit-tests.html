@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>event-hold unit test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #event-hold-module {
+            width: 150px;
+            background: #ccc;
+            padding: 100px;
+        }
+
+        #event-hold-submodule1,
+        #event-hold-submodule2,
+        #event-hold-submodule3 {
+            width: 150px;
+            height: 50px;
+        }
+
+        #event-hold-submodule1 {
+            background: green;
+        }
+        #event-hold-submodule2 {
+            background: blue;
+        }
+
+        #event-hold-submodule3 {
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body class="yui3-skin-sam">
+
+    <div id="event-hold-module">
+        Event-hold module
+        <div class="module" id="event-hold-submodule1">Submodule 1</div>
+        <div class="module" id="event-hold-submodule2">Submodule 2</div>
+        <div class="module" id="event-hold-submodule3">Submodule 3</div>
+    </div>
+
+    <ul id="log">
+
+    </ul>
+
+    <script src="../../../../build/yui/yui.js"></script>
+    <script>
+    YUI({
+        coverage: [ 'event-hold' ],
+        filter: (window.location.search.match(/[?&]filter=([^&]+)/) || [])[1] || 'raw',
+        modules: {
+            'hold-unit-tests': {
+                fullpath: './assets/hold-unit-tests.js',
+                requires: [ 'event-hold', 'test-console', 'test', 'node' ]
+            }
+        },
+        combo: false
+    }).use('hold-unit-tests', function(Y) {
+
+        (new Y.Test.Console()).render('#log');
+        Y.Test.Runner.setName('Hold Event Unit Tests');
+        Y.Test.Runner.run();
+
+    });
+    </script>
+</body>
+</html>
